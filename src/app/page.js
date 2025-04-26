@@ -71,7 +71,7 @@ export default function Home() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/chat", {
+      const response = await fetch("/api/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -82,11 +82,12 @@ export default function Home() {
         }),
       });
 
-      const data = await response.json();
-
-      if (data.error) {
-        throw new Error(data.error);
+      if (!response.ok) {
+        throw new Error(`Server responded with ${response.status}: ${response.statusText}`);
       }
+  
+      const data = await response.json();
+  
 
       // Save session ID if new
       if (data.sessionId && !sessionId) {
@@ -141,7 +142,7 @@ export default function Home() {
 
       // Send feedback to server
       try {
-        await fetch("http://localhost:5000/api/feedback", {
+        const response = await fetch("/api/feedback", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -152,6 +153,11 @@ export default function Home() {
             messageIndex,
           }),
         });
+        
+        // Check if response is OK
+        if (!response.ok) {
+          throw new Error(`Server responded with ${response.status}: ${response.statusText}`);
+        }
       } catch (error) {
         console.error("Error sending feedback:", error);
       }
