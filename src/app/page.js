@@ -300,7 +300,7 @@ export default function Home() {
           </div>
 
           {/* Sidebar for relevant terms */}
-          <div className="hidden md:block  bg-white rounded-lg w-3/5 shadow-md m-4 p-4 overflow-y-auto">
+          <div className="hidden md:block  bg-white rounded-lg w-2/5 min-w-2xl shadow-md m-4 p-4 overflow-y-auto">
             <h2 className="text-lg font-semibold mb-3 flex items-center">
               <FiInfo className="mr-2" /> Related Terms
             </h2>
